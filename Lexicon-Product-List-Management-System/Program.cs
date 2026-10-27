@@ -18,10 +18,8 @@ var tempProducts = new List<Product>
 
 ProductManager productManager = new ProductManager();
 
-foreach (var product in tempProducts)
-{
-    productManager.AddProduct(product);
-}
+
+productManager.AddProduct();
 
 productManager.ShowProducts();
 
@@ -31,5 +29,5 @@ productManager.ShowProducts();
  * 1. Finish ProductManager methods to work as specs describe
  * 2. Implement error handling
  *      a. Look over all classes, methods and functions to see where things can go wrong (tests ?)
- * 3. 
+ * 3.
  */

@@ -4,9 +4,31 @@ public class ProductManager
 {
     List<Product> Products = new List<Product>();
 
-    public void AddProduct(Product product)
+    public void AddProduct()
     {
-        Products.Add(product);
+        while(true)
+        {
+            string productName = ConsoleUI.GetUserInput("Product Name: ");
+            if (productName == "exit") break;
+            
+            string productCategory = ConsoleUI.GetUserInput("Product category: ");
+            if (productCategory == "exit") break;
+            
+            string priceInput = ConsoleUI.GetUserInput("Product price: ");
+            if (priceInput == "exit") break;
+
+            if (!decimal.TryParse(priceInput, out decimal price))
+            {
+                ConsoleUI.RenderText("Invalid price, try again.", ConsoleColor.Red);
+                continue;
+            }
+            
+            Products.Add(new Product(productName, productCategory, price));
+            
+            //Ask user to add another or exit
+            string userInput = ConsoleUI.GetUserInput("Press 'Enter' to add another product. Write 'Exit' to exit.");
+            if (userInput == "no") break;
+        };
     }
 
     public void ShowProducts()

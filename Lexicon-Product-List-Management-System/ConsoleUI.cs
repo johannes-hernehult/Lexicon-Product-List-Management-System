@@ -43,9 +43,9 @@ public static class ConsoleUI
     {
         RenderText("");
         RenderText(
-            "".PadRight(7, '=')
+            "".PadRight(10, '=')
             + " " + heading + " " +
-            "".PadLeft(7, '='),
+            "".PadLeft(10, '='),
             ConsoleColor.Gray);
     }
 
