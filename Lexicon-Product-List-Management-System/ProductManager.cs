@@ -11,11 +11,7 @@ public class ProductManager
 
     public void ShowProducts()
     {
-        Console.WriteLine("Showing products...");
-        foreach (var product in Products)
-        {
-            Console.WriteLine(product.ToString());
-        }
+        ConsoleUI.RenderList(Products);
     }
 
     public void CalculateTotal()
@@ -27,6 +23,7 @@ public class ProductManager
             Console.WriteLine(product.Price);
             total += product.Price;
         }
+
         Console.WriteLine($"Total of products: {total}");
     }
 }
