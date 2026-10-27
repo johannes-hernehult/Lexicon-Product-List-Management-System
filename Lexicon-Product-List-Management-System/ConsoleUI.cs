@@ -5,7 +5,6 @@ public enum ListStyle
     Unordered,
     Ordered
 }
-
 public static class ConsoleUI
 {
     public static void RenderText(string text, ConsoleColor color = ConsoleColor.Black, bool newLine = true)
@@ -20,12 +19,6 @@ public static class ConsoleUI
         {
             Console.ResetColor();
         }
-    }
-
-    public static string GetUserInput(string prompt)
-    {
-        RenderText(prompt, ConsoleColor.Gray, false);
-        return Console.ReadLine() ?? "";
     }
 
     public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered)
@@ -48,7 +41,6 @@ public static class ConsoleUI
             "".PadLeft(10, '='),
             ConsoleColor.Gray);
     }
-
 
     public static void RenderSingleLine()
     {

@@ -6,29 +6,22 @@ public class ProductManager
 
     public void AddProduct()
     {
-        while(true)
+        while (true)
         {
-            string productName = ConsoleUI.GetUserInput("Product Name: ");
-            if (productName == "exit") break;
-            
-            string productCategory = ConsoleUI.GetUserInput("Product category: ");
-            if (productCategory == "exit") break;
-            
-            string priceInput = ConsoleUI.GetUserInput("Product price: ");
-            if (priceInput == "exit") break;
+            var name = ConsoleInput.GetString("Product name: ");
+            if (name is null) break;
 
-            if (!decimal.TryParse(priceInput, out decimal price))
-            {
-                ConsoleUI.RenderText("Invalid price, try again.", ConsoleColor.Red);
-                continue;
-            }
-            
-            Products.Add(new Product(productName, productCategory, price));
-            
-            //Ask user to add another or exit
-            string userInput = ConsoleUI.GetUserInput("Press 'Enter' to add another product. Write 'Exit' to exit.");
-            if (userInput == "no") break;
-        };
+            var category = ConsoleInput.GetString("Product category: ");
+            if (category is null) break;
+
+            var price = ConsoleInput.GetDecimal("Product price: ");
+            if (price is null) break;
+
+            Products.Add(new Product(name, category, price.Value));
+
+            var again = ConsoleInput.GetUserInput("Press Enter to add another, or write 'exit' to stop: ");
+            if (ConsoleInput.IsExit(again)) break;
+        }
     }
 
     public void ShowProducts()
