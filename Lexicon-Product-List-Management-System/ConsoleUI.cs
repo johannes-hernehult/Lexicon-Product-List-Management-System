@@ -36,14 +36,14 @@ public static class ConsoleUI
     {
         RenderText("");
         RenderText(
-            "".PadRight(10, '=')
+            "".PadRight(16, '=')
             + " " + heading + " " +
-            "".PadLeft(10, '='),
+            "".PadLeft(16, '='),
             ConsoleColor.Gray);
     }
 
     public static void RenderSingleLine()
     {
-        Console.WriteLine("------------------------------------");
+        Console.WriteLine("-----------------------------------------------");
     }
 }
