@@ -11,19 +11,21 @@ public class ProductManager
 
     public void ShowProducts()
     {
+        ConsoleUI.RenderHeading("ALL PRODUCTS");
         ConsoleUI.RenderList(Products);
+        ConsoleUI.RenderSingleLine();
+        ConsoleUI.RenderText($"TOTAL PRICE: {CalculateTotal():C}");
+        ConsoleUI.RenderSingleLine();
     }
 
-    public void CalculateTotal()
+    public decimal CalculateTotal()
     {
-        Console.WriteLine("Calculating total of products...");
         decimal total = 0;
         foreach (var product in Products)
         {
-            Console.WriteLine(product.Price);
             total += product.Price;
         }
 
-        Console.WriteLine($"Total of products: {total}");
+        return total;
     }
 }

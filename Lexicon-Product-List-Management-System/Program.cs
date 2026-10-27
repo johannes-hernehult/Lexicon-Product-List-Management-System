@@ -25,3 +25,11 @@ foreach (var product in tempProducts)
 
 productManager.ShowProducts();
 
+
+/*
+ * TODO:
+ * 1. Finish ProductManager methods to work as specs describe
+ * 2. Implement error handling
+ *      a. Look over all classes, methods and functions to see where things can go wrong (tests ?)
+ * 3. 
+ */
