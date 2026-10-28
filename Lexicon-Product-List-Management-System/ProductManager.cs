@@ -26,6 +26,57 @@ public class ProductManager
         }
     }
 
+    public void ShowProducts()
+    {
+        if (products.Count == 0)
+        {
+            RenderNoProducts();
+            return;
+        }
+
+        var orderedProductsByPrice = products.OrderBy(p => p.Price).ToList();
+        Console.Clear();
+        ConsoleUI.RenderHeading("All products");
+        RenderTableHeader();
+        ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
+        ConsoleUI.RenderTotalPrice(products);
+        ConsoleInput.Pause();
+    }
+
+    public void SearchProducts()
+    {
+        if (products.Count == 0)
+        {
+            RenderNoProducts();
+            return;
+        }
+
+        Console.Clear();
+        ConsoleUI.RenderHeading("Search for products");
+
+        while (true)
+        {
+            var searchTerm = ConsoleInput.GetString("Search ('exit' to go back): ", "Search term");
+            if (searchTerm is null) break;
+
+            var results = products
+                .Where(p =>
+                    p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (results.Count == 0)
+            {
+                ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+                continue;
+            }
+
+            ConsoleUI.RenderHeading("Search results");
+            RenderTableHeader();
+            ConsoleUI.RenderList(results, ListStyle.Unordered, overrideColor: ConsoleColor.Green);
+        }
+    }
+
     private static Product? PromptForProduct()
     {
         var name = ConsoleInput.GetString("Product name: ", "Product name");
@@ -48,59 +99,15 @@ public class ProductManager
         ConsoleUI.RenderList(items, ListStyle.Unordered, true);
     }
 
-    public void ShowProducts()
+    private static void RenderTableHeader()
     {
-        if (products.Count == 0)
-        {
-            ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
-            ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
-            return;
-        }
-
-        var orderedProductsByPrice = products.OrderBy(p => p.Price).ToList();
-        Console.Clear();
-        ConsoleUI.RenderHeading("All products");
         ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
         ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
-        ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
-        ConsoleUI.RenderTotalPrice(products);
-        ConsoleInput.Pause();
     }
 
-
-    public void SearchProducts()
+    private static void RenderNoProducts()
     {
-        Console.Clear();
-        ConsoleUI.RenderHeading("Search for products");
-        
-        if (products.Count == 0)
-        {
-            ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
-            ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
-            return;
-        }
-
-        while (true)
-        {
-            var searchTerm = ConsoleInput.GetString("Search ('exit' to go back): ", "Search term");
-            if (searchTerm is null) break;
-
-            var results = products
-                .Where(p =>
-                    p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                    p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            if (results.Count == 0)
-            {
-                ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
-                continue;
-            }
-
-            ConsoleUI.RenderHeading("Search results");
-            ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
-            ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
-            ConsoleUI.RenderList(results, ListStyle.Unordered, overrideColor: ConsoleColor.Green);
-        }
+        ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+        ConsoleInput.Pause("Press 'Enter' to exit: ");
     }
 }
