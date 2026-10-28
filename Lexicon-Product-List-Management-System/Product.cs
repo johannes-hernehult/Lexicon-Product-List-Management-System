@@ -2,23 +2,22 @@ namespace Lexicon_Product_List_Management_System;
 
 public class Product
 {
-    public Product(string name, string category, decimal price)
-    {
-        Id = Guid.NewGuid();
-        Category = category;
-        Name = name;
-        Price = price;
-    }
-
+    public static string Header =>
+        new string(' ', Layout.PrefixWidth) +
+        $"{"Name",-Layout.NameWidth} {"Category",Layout.CategoryWidth} {"Price",Layout.PriceWidth}";
 
     public Guid Id { get; }
     public string Name { get; }
     public string Category { get; }
     public decimal Price { get; }
 
-    public static string Header =>
-        new string(' ', Layout.PrefixWidth) +
-        $"{"Name",-Layout.NameWidth} {"Category",Layout.CategoryWidth} {"Price",Layout.PriceWidth}";
+    public Product(string name, string category, decimal price)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        Category = category;
+        Price = price;
+    }
 
     public override string ToString() =>
         $"{Truncate(Name, Layout.NameWidth),-Layout.NameWidth} " +
