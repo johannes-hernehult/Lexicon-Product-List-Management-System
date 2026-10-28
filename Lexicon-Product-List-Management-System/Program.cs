@@ -18,16 +18,20 @@ var tempProducts = new List<Product>
 
 ProductManager productManager = new ProductManager();
 
+var mainMenu = new List<(string, Action)>
+{
+    ("Add new product", productManager.AddProduct),
+    ("See all products", productManager.ShowProducts),
+};
 
-productManager.AddProduct();
-
-productManager.ShowProducts();
+ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
 
 
 /*
  * TODO:
- * 1. Finish ProductManager methods to work as specs describe
+ * 3. Implement main menu
  * 2. Implement error handling
  *      a. Look over all classes, methods and functions to see where things can go wrong (tests ?)
- * 3.
+ * 4. Render all products after adding one product???
+ * 5. Handling negative values?
  */

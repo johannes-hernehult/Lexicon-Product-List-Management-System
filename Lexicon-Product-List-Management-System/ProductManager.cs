@@ -31,6 +31,7 @@ public class ProductManager
         ConsoleUI.RenderSingleLine();
         ConsoleUI.RenderText($"TOTAL PRICE: {CalculateTotal():C}");
         ConsoleUI.RenderSingleLine();
+        ConsoleInput.GetUserInput("Press Enter to exit: ");
     }
 
     public decimal CalculateTotal()

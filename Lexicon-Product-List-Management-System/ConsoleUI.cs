@@ -21,12 +21,17 @@ public static class ConsoleUI
         }
     }
 
-    public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered)
+    public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered, bool isAlternatingColor = false)
     {
+        var color = ConsoleColor.Black;
+        
         for (int i = 0; i < items.Count; i++)
         {
             var prefix = style == ListStyle.Ordered ? $"{i + 1}. " : "- ";
-            var color = i % 2 == 0 ? ConsoleColor.Black : ConsoleColor.Gray;
+            if(isAlternatingColor)
+            {
+                color = i % 2 == 0 ? ConsoleColor.Black : ConsoleColor.Gray;
+            }
 
             RenderText(prefix + (items[i]?.ToString() ?? ""), color);
         }
@@ -46,4 +51,6 @@ public static class ConsoleUI
     {
         Console.WriteLine("-----------------------------------------------");
     }
+
+
 }
