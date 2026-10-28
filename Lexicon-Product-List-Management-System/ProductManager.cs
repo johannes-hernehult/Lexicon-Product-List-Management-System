@@ -63,22 +63,22 @@ public class ProductManager
         ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
         ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
         ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
-        RenderTotalPrice();
-        ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
+        ConsoleUI.RenderTotalPrice(products);
+        ConsoleInput.Pause();
     }
+    
 
-    private decimal CalculateTotal()
+    public void SearchProducts()
     {
-        return products.Sum(p => p.Price);
-    }
-
-    private void RenderTotalPrice()
-    {
-        const string label = "  TOTAL PRICE: ";
-        var total = CalculateTotal().ToString("C").PadLeft(Layout.RowWidth - label.Length);
+        if (products.Count == 0)
+        {
+            ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+            ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
+            return;
+        }
         
-        ConsoleUI.RenderSingleLine();
-        ConsoleUI.RenderText(label + total);
-        ConsoleUI.RenderDoubleLine();
+        Console.Clear();
+        ConsoleUI.RenderHeading("Search for products");
+        
     }
 }

@@ -8,6 +8,7 @@ var mainMenu = new List<(string, Action)>
 {
     ("Add new product", productManager.AddProduct),
     ("See all products", productManager.ShowProducts),
+    ("Search for products", productManager.SearchProducts),
 };
 
 try
