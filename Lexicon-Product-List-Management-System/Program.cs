@@ -15,7 +15,6 @@ ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
 
 /*
  * TODO:
- * - Sort by price in show all ???
  * - Input validation and Error handling
  * - 
  */

@@ -33,8 +33,9 @@ public class ProductManager
 
     public void ShowProducts()
     {
+        List<Product> orderedByPriceProducts = new List<Product>(products.OrderBy(product => product.Price));
         ConsoleUI.RenderHeading("ALL PRODUCTS");
-        ConsoleUI.RenderList(products);
+        ConsoleUI.RenderList(orderedByPriceProducts);
         ConsoleUI.RenderSingleLine();
         ConsoleUI.RenderText($"TOTAL PRICE: {CalculateTotal():C}");
         ConsoleUI.RenderSingleLine();
