@@ -10,13 +10,25 @@ public class ProductManager
         while (true)
         {
             var name = ConsoleInput.GetString("Product name: ");
-            if (name is null) break;
+            if (name is null)
+            {
+                ConsoleInput.ReportCancel();
+                break;
+            }
 
             var category = ConsoleInput.GetString("Product category: ");
-            if (category is null) break;
+            if (category is null)
+            {
+                ConsoleInput.ReportCancel();
+                break;
+            }
 
             var price = ConsoleInput.GetDecimal("Product price: ");
-            if (price is null) break;
+            if (price is null)
+            {
+                ConsoleInput.ReportCancel();
+                break;
+            }
 
             Product newProduct = new Product(name, category, price.Value);
 
@@ -35,20 +47,35 @@ public class ProductManager
 
     public void ShowProducts()
     {
+        if (products.Count == 0)
+        {
+            ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+            ConsoleInput.GetUserInput("Press Enter to exit: ");
+            return;
+        }
+
         var orderedProductsByPrice = products.OrderBy(p => p.Price).ToList();
         Console.Clear();
         ConsoleUI.RenderHeading("All products");
         ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
-        ConsoleUI.RenderSingleLine();
+        ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
         ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
-        ConsoleUI.RenderSingleLine();
-        ConsoleUI.RenderText($"TOTAL PRICE: {CalculateTotal():C}");
-        ConsoleUI.RenderSingleLine();
+        RenderTotalPrice();
         ConsoleInput.GetUserInput("Press Enter to exit: ");
     }
 
     private decimal CalculateTotal()
     {
         return products.Sum(p => p.Price);
+    }
+
+    private void RenderTotalPrice()
+    {
+        const string label = "TOTAL PRICE: ";
+        var total = CalculateTotal().ToString("C").PadLeft(Layout.RowWidth - label.Length);
+        
+        ConsoleUI.RenderSingleLine();
+        ConsoleUI.RenderText(label + total);
+        ConsoleUI.RenderDoubleLine();
     }
 }

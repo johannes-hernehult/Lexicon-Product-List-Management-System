@@ -16,5 +16,5 @@ ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
 /*
  * TODO:
  * - Input validation and Error handling
- * - 
+ * -
  */
