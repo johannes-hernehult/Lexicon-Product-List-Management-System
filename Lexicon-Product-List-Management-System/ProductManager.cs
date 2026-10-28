@@ -6,43 +6,46 @@ public class ProductManager
 
     public void AddProduct()
     {
-        List<Product> sessionProducts = new List<Product>();
+        var sessionProducts = new List<Product>();
+
         while (true)
         {
-            var name = ConsoleInput.GetString("Product name: ");
-            if (name is null)
+            var product = PromptForProduct();
+            if (product is null)
             {
                 ConsoleInput.ReportCancel();
-                break;
+                return;
             }
 
-            var category = ConsoleInput.GetString("Product category: ");
-            if (category is null)
-            {
-                ConsoleInput.ReportCancel();
-                break;
-            }
+            products.Add(product);
+            sessionProducts.Add(product);
+            RenderSessionProducts(sessionProducts);
 
-            var price = ConsoleInput.GetDecimal("Product price: ");
-            if (price is null)
-            {
-                ConsoleInput.ReportCancel();
-                break;
-            }
-
-            Product newProduct = new Product(name, category, price.Value);
-
-            products.Add(newProduct);
-            sessionProducts.Add(newProduct);
-
-            Console.Clear();
-            ConsoleUI.RenderText(Product.Header, ConsoleColor.Gray);
-            ConsoleUI.RenderSingleLine();
-            ConsoleUI.RenderList(sessionProducts, ListStyle.Unordered, true);
-
-            var again = ConsoleInput.GetUserInput("Press Enter to add another, or write 'exit' to stop: ");
-            if (ConsoleInput.IsExit(again)) break;
+            var again = ConsoleInput.GetUserInput("Press 'Enter' to add another, or write 'exit' to stop: ");
+            if (ConsoleInput.IsExit(again)) return;
         }
+    }
+
+    private static Product? PromptForProduct()
+    {
+        var name = ConsoleInput.GetString("Product name: ");
+        if (name is null) return null;
+
+        var category = ConsoleInput.GetString("Product category: ");
+        if (category is null) return null;
+
+        var price = ConsoleInput.GetDecimal("Product price: ");
+        if (price is null) return null;
+
+        return new Product(name, category, price.Value);
+    }
+
+    private static void RenderSessionProducts(IReadOnlyList<Product> items)
+    {
+        Console.Clear();
+        ConsoleUI.RenderText(Product.Header, ConsoleColor.Gray);
+        ConsoleUI.RenderSingleLine();
+        ConsoleUI.RenderList(items, ListStyle.Unordered, true);
     }
 
     public void ShowProducts()
@@ -50,7 +53,7 @@ public class ProductManager
         if (products.Count == 0)
         {
             ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
-            ConsoleInput.GetUserInput("Press Enter to exit: ");
+            ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
             return;
         }
 
@@ -61,7 +64,7 @@ public class ProductManager
         ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
         ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
         RenderTotalPrice();
-        ConsoleInput.GetUserInput("Press Enter to exit: ");
+        ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
     }
 
     private decimal CalculateTotal()
@@ -71,7 +74,7 @@ public class ProductManager
 
     private void RenderTotalPrice()
     {
-        const string label = "TOTAL PRICE: ";
+        const string label = "  TOTAL PRICE: ";
         var total = CalculateTotal().ToString("C").PadLeft(Layout.RowWidth - label.Length);
         
         ConsoleUI.RenderSingleLine();
