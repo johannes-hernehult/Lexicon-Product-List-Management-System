@@ -6,7 +6,7 @@ public static class ConsoleInput
 {
     public static string GetUserInput(string prompt)
     {
-        ConsoleUI.RenderText(prompt, ConsoleColor.Gray, false);
+        ConsoleUI.RenderText(prompt, ConsoleColor.Cyan, false);
         return Console.ReadLine() ?? "";
     }
 
