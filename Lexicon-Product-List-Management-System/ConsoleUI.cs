@@ -39,14 +39,14 @@ public static class ConsoleUI
         }
     }
 
-    public static void RenderHeading(string heading)
+    public static void RenderHeading(string heading, int width = Layout.RowWidth)
     {
+        var text = $" {heading} ";
+        var left = Math.Max(0, (width - text.Length) / 2);
+        var right = Math.Max(0, width - text.Length - left);
+
         RenderText("");
-        RenderText(
-            "".PadRight(15, '=')
-            + " " + heading + " " +
-            "".PadLeft(18, '='),
-            ConsoleColor.Gray);
+        RenderText(new string('=', left) + text + new string('=', right), ConsoleColor.Gray);
     }
 
     public static void RenderSingleLine(int width = Layout.RowWidth, ConsoleColor? color = null)
@@ -85,5 +85,4 @@ public static class ConsoleUI
         RenderHeading(title);
         RenderList(labels, ListStyle.Ordered);
     }
-    
 }
