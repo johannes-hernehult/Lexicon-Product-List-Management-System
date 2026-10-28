@@ -16,6 +16,5 @@ public class Product
     public string Category { get; set; }
     public decimal Price { get; set; }
     
-    public override string ToString() => $"{Name,-18} {Category,-13} {Price,12:C}";
-    
-}
+    public static string Header => $"  {"Name",-14} {"Category",14} {"Price",14}";
+    public override string ToString() => $"{Name,-14} {Category,14} {Price,14:C}";}
