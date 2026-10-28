@@ -5,11 +5,12 @@ public enum ListStyle
     Unordered,
     Ordered
 }
+
 public static class ConsoleUI
 {
-    public static void RenderText(string text, ConsoleColor color = ConsoleColor.Black, bool newLine = true)
+    public static void RenderText(string text, ConsoleColor? color = null, bool newLine = true)
     {
-        Console.ForegroundColor = color;
+        if (color is not null) Console.ForegroundColor = color.Value;
         try
         {
             if (newLine) Console.WriteLine(text);
@@ -21,14 +22,15 @@ public static class ConsoleUI
         }
     }
 
-    public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered, bool isAlternatingColor = false)
+    public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered,
+        bool isAlternatingColor = false)
     {
         var color = ConsoleColor.Black;
-        
+
         for (int i = 0; i < items.Count; i++)
         {
             var prefix = style == ListStyle.Ordered ? $"{i + 1}. " : "- ";
-            if(isAlternatingColor)
+            if (isAlternatingColor)
             {
                 color = i % 2 == 0 ? ConsoleColor.Black : ConsoleColor.Gray;
             }
@@ -47,14 +49,19 @@ public static class ConsoleUI
             ConsoleColor.Gray);
     }
 
-    public static void RenderSingleLine()
+    public static void RenderSingleLine(int width = Layout.RowWidth, ConsoleColor? color = null)
     {
-        Console.WriteLine("-----------------------------------------------");
+        RenderText(new string('-', width), color);
     }
-    
+
+    public static void RenderDoubleLine(int width = Layout.RowWidth, ConsoleColor? color = null)
+    {
+        RenderText(new string('=', width), color);
+    }
+
     public static void RenderPrompt(string prompt)
     {
-        RenderText(prompt, ConsoleColor.Cyan, false);
+        RenderText(prompt, ConsoleColor.DarkGreen, false);
     }
 
     public static void RenderError(string message)
@@ -65,6 +72,11 @@ public static class ConsoleUI
     public static void RenderWarning(string message)
     {
         RenderText(message, ConsoleColor.Yellow);
+    }
+
+    public static void RenderSuccess(string message)
+    {
+        RenderText(message, ConsoleColor.Green);
     }
 
     public static void RenderMenu(IReadOnlyList<string> labels, string title)
