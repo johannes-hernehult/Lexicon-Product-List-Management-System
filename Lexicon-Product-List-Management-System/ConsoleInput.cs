@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Diagnostics;
 
 namespace Lexicon_Product_List_Management_System;
 
@@ -31,7 +30,7 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
 
             var normalized = input.Replace(',', '.');
-            if (!decimal.TryParse(normalized, out var value))
+            if (!   decimal.TryParse(normalized, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
             {
                 ConsoleUI.RenderError($"'{input}' is not a valid number. Use digits only, e.g. 12.50.");
                 continue;
