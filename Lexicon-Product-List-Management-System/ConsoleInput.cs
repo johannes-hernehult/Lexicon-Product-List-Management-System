@@ -6,7 +6,7 @@ public static class ConsoleInput
 {
     public static string GetUserInput(string prompt)
     {
-        ConsoleUI.RenderText(prompt, ConsoleColor.Cyan, false);
+        ConsoleUI.RenderPrompt(prompt);
         return Console.ReadLine() ?? "";
     }
 
@@ -18,7 +18,7 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
             if (input != "") return input;
 
-            ConsoleUI.RenderText("Cannot be empty, try again.", ConsoleColor.Red);
+            ConsoleUI.RenderError("Cannot be empty, try again.");
         }
     }
 
@@ -30,7 +30,7 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
             if (decimal.TryParse(input, out var value) && value >= 0) return value;
 
-            ConsoleUI.RenderText("Invalid number, try again.", ConsoleColor.Red);
+            ConsoleUI.RenderError("Invalid number, try again.");
         }
     }
 
@@ -42,7 +42,7 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
             if (int.TryParse(input, out int value) && value >= min && value <= max) return value;
 
-            ConsoleUI.RenderText($"Enter a number between {min} and {max}.", ConsoleColor.Red);
+            ConsoleUI.RenderError($"Enter a number between {min} and {max}.");
         }
     }
 
@@ -55,17 +55,12 @@ public static class ConsoleInput
     {
         while (true)
         {
-            Console.Clear();
-            ConsoleUI.RenderHeading(title);
-            ConsoleUI.RenderList(items.Select(i => i.Label).ToList(), ListStyle.Ordered);
+            ConsoleUI.RenderMenu(items.Select(i => i.Label).ToList(), title);
 
             var choice = GetInt("Select a menu item (or 'exit'): ", 1, items.Count);
             if (choice is null) break;
 
             items[choice.Value - 1].Action();
-
-//            ConsoleUI.RenderText("Press Enter to continue...", ConsoleColor.Gray);
-//            Console.ReadLine();
         }
     }
 }

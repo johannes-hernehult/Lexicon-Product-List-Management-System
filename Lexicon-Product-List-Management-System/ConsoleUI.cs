@@ -41,15 +41,37 @@ public static class ConsoleUI
     {
         RenderText("");
         RenderText(
-            "".PadRight(16, '=')
+            "".PadRight(15, '=')
             + " " + heading + " " +
-            "".PadLeft(16, '='),
+            "".PadLeft(18, '='),
             ConsoleColor.Gray);
     }
 
     public static void RenderSingleLine()
     {
         Console.WriteLine("-----------------------------------------------");
+    }
+    
+    public static void RenderPrompt(string prompt)
+    {
+        RenderText(prompt, ConsoleColor.Cyan, false);
+    }
+
+    public static void RenderError(string message)
+    {
+        RenderText(message, ConsoleColor.Red);
+    }
+
+    public static void RenderWarning(string message)
+    {
+        RenderText(message, ConsoleColor.Yellow);
+    }
+
+    public static void RenderMenu(IReadOnlyList<string> labels, string title)
+    {
+        Console.Clear();
+        RenderHeading(title);
+        RenderList(labels, ListStyle.Ordered);
     }
     
 }
