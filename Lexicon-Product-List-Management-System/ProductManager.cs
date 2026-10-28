@@ -66,19 +66,41 @@ public class ProductManager
         ConsoleUI.RenderTotalPrice(products);
         ConsoleInput.Pause();
     }
-    
+
 
     public void SearchProducts()
     {
+        Console.Clear();
+        ConsoleUI.RenderHeading("Search for products");
+        
         if (products.Count == 0)
         {
             ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
             ConsoleInput.GetUserInput("Press 'Enter' to exit: ");
             return;
         }
-        
-        Console.Clear();
-        ConsoleUI.RenderHeading("Search for products");
-        
+
+        while (true)
+        {
+            var searchTerm = ConsoleInput.GetString("Search ('exit' to go back): ", "Search term");
+            if (searchTerm is null) break;
+
+            var results = products
+                .Where(p =>
+                    p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            if (results.Count == 0)
+            {
+                ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+                continue;
+            }
+
+            ConsoleUI.RenderHeading("Search results");
+            ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
+            ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
+            ConsoleUI.RenderList(results, ListStyle.Unordered, true);
+        }
     }
 }
