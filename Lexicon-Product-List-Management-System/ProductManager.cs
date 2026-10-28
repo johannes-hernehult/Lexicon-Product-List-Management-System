@@ -13,7 +13,7 @@ public class ProductManager
             var product = PromptForProduct();
             if (product is null)
             {
-                ConsoleInput.ReportCancel();
+                ConsoleInput.ReportCancel("Add product");
                 return;
             }
 
@@ -28,10 +28,10 @@ public class ProductManager
 
     private static Product? PromptForProduct()
     {
-        var name = ConsoleInput.GetString("Product name: ");
+        var name = ConsoleInput.GetString("Product name: ", "Product name");
         if (name is null) return null;
 
-        var category = ConsoleInput.GetString("Product category: ");
+        var category = ConsoleInput.GetString("Product category: ", "Product category");
         if (category is null) return null;
 
         var price = ConsoleInput.GetDecimal("Product price: ");

@@ -11,19 +11,19 @@ public static class ConsoleInput
         return Console.ReadLine()?.Trim() ?? "";
     }
 
-    public static string? GetString(string prompt)
+    public static string? GetString(string prompt, string fieldName)
     {
         while (true)
         {
             var input = GetUserInput(prompt);
             if (IsExit(input)) return null;
             if (!string.IsNullOrWhiteSpace(input)) return input;
-            
-            ConsoleUI.RenderError("Cannot be empty, try again.");
+
+            ConsoleUI.RenderError($"{fieldName} cannot be empty. Enter a value or type 'exit' to cancel.");
         }
     }
 
-    public static decimal? GetDecimal(string prompt)
+    public static decimal? GetDecimal(string prompt, decimal max = 9_999_999m)
     {
         while (true)
         {
@@ -31,11 +31,25 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
 
             var normalized = input.Replace(',', '.');
-            if (decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint,
-                    CultureInfo.InvariantCulture, out var value) && value >= 0)
-                return value;
+            if (!decimal.TryParse(normalized, out var value))
+            {
+                ConsoleUI.RenderError($"'{input}' is not a valid number. Use digits only, e.g. 12.50.");
+                continue;
+            }
 
-            ConsoleUI.RenderError("Invalid number, try again (e.g. 12.50).");
+            if (value < 0)
+            {
+                ConsoleUI.RenderError("Price cannot be negative.");
+                continue;
+            }
+
+            if (value > max)
+            {
+                ConsoleUI.RenderError($"Price cannot exceed {max:N0}.");
+                continue;
+            }
+
+            return value;
         }
     }
 
@@ -68,12 +82,12 @@ public static class ConsoleInput
             items[choice.Value - 1].Action();
         }
     }
-    
-    public static void ReportCancel()
+
+    public static void ReportCancel(string what)
     {
-        ConsoleUI.RenderWarning("Action canceled.");
-        ConsoleInput.GetUserInput("Press 'Enter' to continue");
+        ConsoleUI.RenderWarning($"{what} canceled. Nothing was saved.");
+        Pause();
     }
-    
+
     public static void Pause(string prompt = "Press 'Enter' to continue: ") => GetUserInput(prompt);
 }
