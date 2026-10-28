@@ -10,11 +10,11 @@ var mainMenu = new List<(string, Action)>
     ("See all products", productManager.ShowProducts),
 };
 
-ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
-
-
-/*
- * TODO:
- * - Input validation and Error handling
- * -
- */
+try
+{
+    ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
+}
+catch (Exception ex)
+{
+    ConsoleUI.RenderError($"Fatal error: {ex.Message}");
+}
