@@ -80,4 +80,14 @@ public static class ConsoleUI
         RenderHeading(title);
         RenderList(labels, ListStyle.Ordered);
     }
+    
+    public static void RenderTotalPrice(List<Product> products)
+    {
+        const string label = "  TOTAL PRICE: ";
+        var total = Helpers.CalculateTotal(products).ToString("C").PadLeft(Layout.RowWidth - label.Length);
+        
+        ConsoleUI.RenderSingleLine();
+        ConsoleUI.RenderText(label + total);
+        ConsoleUI.RenderDoubleLine();
+    }
 }
