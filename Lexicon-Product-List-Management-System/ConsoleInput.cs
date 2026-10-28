@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Diagnostics;
 
 namespace Lexicon_Product_List_Management_System;
@@ -7,7 +8,7 @@ public static class ConsoleInput
     public static string GetUserInput(string prompt)
     {
         ConsoleUI.RenderPrompt(prompt);
-        return Console.ReadLine() ?? "";
+        return Console.ReadLine()?.Trim() ?? "";
     }
 
     public static string? GetString(string prompt)
@@ -16,8 +17,8 @@ public static class ConsoleInput
         {
             var input = GetUserInput(prompt);
             if (IsExit(input)) return null;
-            if (input != "") return input;
-
+            if (!string.IsNullOrWhiteSpace(input)) return input;
+            
             ConsoleUI.RenderError("Cannot be empty, try again.");
         }
     }
@@ -28,9 +29,13 @@ public static class ConsoleInput
         {
             var input = GetUserInput(prompt);
             if (IsExit(input)) return null;
-            if (decimal.TryParse(input, out var value) && value >= 0) return value;
 
-            ConsoleUI.RenderError("Invalid number, try again.");
+            var normalized = input.Replace(',', '.');
+            if (decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture, out var value) && value >= 0)
+                return value;
+
+            ConsoleUI.RenderError("Invalid number, try again (e.g. 12.50).");
         }
     }
 
@@ -62,5 +67,11 @@ public static class ConsoleInput
 
             items[choice.Value - 1].Action();
         }
+    }
+    
+    public static void ReportCancel()
+    {
+        ConsoleUI.RenderWarning("Action canceled.");
+        ConsoleInput.GetUserInput("Press 'Enter' to continue");
     }
 }
