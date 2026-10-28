@@ -6,7 +6,7 @@ public class ProductManager
 
     public void AddProduct()
     {
-        List<Product> sessionProcucts = new List<Product>();
+        List<Product> sessionProducts = new List<Product>();
         while (true)
         {
             var name = ConsoleInput.GetString("Product name: ");
@@ -19,12 +19,12 @@ public class ProductManager
             if (price is null) break;
 
             products.Add(new Product(name, category, price.Value));
-            sessionProcucts.Add(products.Last());
+            sessionProducts.Add(products.Last());
             
             Console.Clear();
             ConsoleUI.RenderText(Product.Header, ConsoleColor.Gray);
             ConsoleUI.RenderSingleLine();
-            ConsoleUI.RenderList(sessionProcucts, ListStyle.Unordered, true);
+            ConsoleUI.RenderList(sessionProducts, ListStyle.Unordered, true);
             
             var again = ConsoleInput.GetUserInput("Press Enter to add another, or write 'exit' to stop: ");
             if (ConsoleInput.IsExit(again)) break;
