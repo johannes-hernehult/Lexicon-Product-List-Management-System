@@ -23,12 +23,14 @@ public static class ConsoleUI
     }
 
     public static void RenderList<T>(IReadOnlyList<T> items, ListStyle style = ListStyle.Unordered,
-        bool isAlternatingColor = false)
+        bool isAlternatingColor = false, ConsoleColor? overrideColor = null)
     {
         for (int i = 0; i < items.Count; i++)
         {
             var prefix = style == ListStyle.Ordered ? $"{i + 1}. " : "- ";
-            ConsoleColor? color = isAlternatingColor && i % 2 == 1 ? ConsoleColor.Gray : null;
+
+            // Prioritize the override color if one is provided
+            ConsoleColor? color = overrideColor ?? (isAlternatingColor && i % 2 == 1 ? ConsoleColor.Gray : null);
 
             RenderText(prefix + (items[i]?.ToString() ?? ""), color);
         }
@@ -80,12 +82,12 @@ public static class ConsoleUI
         RenderHeading(title);
         RenderList(labels, ListStyle.Ordered);
     }
-    
+
     public static void RenderTotalPrice(List<Product> products)
     {
         const string label = "  TOTAL PRICE: ";
         var total = Helpers.CalculateTotal(products).ToString("C").PadLeft(Layout.RowWidth - label.Length);
-        
+
         ConsoleUI.RenderSingleLine();
         ConsoleUI.RenderText(label + total);
         ConsoleUI.RenderDoubleLine();
