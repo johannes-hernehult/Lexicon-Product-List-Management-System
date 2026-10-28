@@ -74,4 +74,6 @@ public static class ConsoleInput
         ConsoleUI.RenderWarning("Action canceled.");
         ConsoleInput.GetUserInput("Press 'Enter' to continue");
     }
+    
+    public static void Pause(string prompt = "Press 'Enter' to continue: ") => GetUserInput(prompt);
 }
