@@ -1,0 +1,6 @@
+namespace Lexicon_Product_List_Management_System;
+
+public class Helpers
+{
+    
+}

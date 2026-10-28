@@ -12,9 +12,9 @@ public class Product
 
 
     public Guid Id { get; }
-    public string Name { get; set; }
-    public string Category { get; set; }
-    public decimal Price { get; set; }
+    public string Name { get; }
+    public string Category { get; }
+    public decimal Price { get; }
 
     public static string Header =>
         new string(' ', Layout.PrefixWidth) +
