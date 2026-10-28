@@ -100,7 +100,7 @@ public class ProductManager
             ConsoleUI.RenderHeading("Search results");
             ConsoleUI.RenderText(Product.Header, ConsoleColor.DarkGray);
             ConsoleUI.RenderSingleLine(color: ConsoleColor.Gray);
-            ConsoleUI.RenderList(results, ListStyle.Unordered, true);
+            ConsoleUI.RenderList(results, ListStyle.Unordered, overrideColor: ConsoleColor.Green);
         }
     }
 }
