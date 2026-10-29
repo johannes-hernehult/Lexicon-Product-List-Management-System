@@ -7,7 +7,7 @@ public static class ConsoleInput
     public static string GetUserInput(string prompt)
     {
         ConsoleUI.RenderPrompt(prompt);
-        return Console.ReadLine()?.Trim() ?? "";
+        return Console.ReadLine()?.Trim() ?? string.Empty;
     }
 
     public static bool IsExit(string input)
@@ -53,6 +53,7 @@ public static class ConsoleInput
                 continue;
             }
 
+            value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
             return value;
         }
     }
