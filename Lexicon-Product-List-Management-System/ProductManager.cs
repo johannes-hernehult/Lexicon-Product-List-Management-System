@@ -21,7 +21,7 @@ public class ProductManager
             sessionProducts.Add(product);
             RenderSessionProducts(sessionProducts);
 
-            var again = ConsoleInput.GetUserInput("Press 'Enter' to add another, or write 'exit' to stop: ");
+            var again = ConsoleInput.GetUserInput("Press 'Enter' to add another, or 'q' to stop: ");
             if (ConsoleInput.IsExit(again)) return;
         }
     }
@@ -56,7 +56,7 @@ public class ProductManager
 
         while (true)
         {
-            var searchTerm = ConsoleInput.GetString("Search ('exit' to go back): ", "Search term");
+            var searchTerm = ConsoleInput.GetString("Search ('q' to go back): ", "Search term");
             if (searchTerm is null) break;
 
             var results = products
@@ -65,13 +65,15 @@ public class ProductManager
                     p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
+            Console.Clear();
+            ConsoleUI.RenderHeading($"Results for '{searchTerm}'");
+
             if (results.Count == 0)
             {
                 ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
                 continue;
             }
 
-            ConsoleUI.RenderHeading("Search results");
             RenderTableHeader();
             ConsoleUI.RenderList(results, ListStyle.Unordered, overrideColor: ConsoleColor.Green);
         }

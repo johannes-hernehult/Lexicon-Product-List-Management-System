@@ -12,7 +12,7 @@ public static class ConsoleInput
 
     public static bool IsExit(string input)
     {
-        return input.Equals("exit", StringComparison.OrdinalIgnoreCase);
+        return input.Equals("q", StringComparison.OrdinalIgnoreCase);
     }
 
     public static string? GetString(string prompt, string fieldName)
@@ -23,7 +23,7 @@ public static class ConsoleInput
             if (IsExit(input)) return null;
             if (!string.IsNullOrWhiteSpace(input)) return input;
 
-            ConsoleUI.RenderError($"{fieldName} cannot be empty. Enter a value or type 'exit' to cancel.");
+            ConsoleUI.RenderError($"{fieldName} cannot be empty. Enter a value or type 'q' to cancel.");
         }
     }
 
@@ -85,7 +85,7 @@ public static class ConsoleInput
         {
             ConsoleUI.RenderMenu(items.Select(i => i.Label).ToList(), title);
 
-            var choice = GetInt("Select a menu item (or 'exit'): ", 1, items.Count);
+            var choice = GetInt("Select a menu item (or 'q' to quit): ", 1, items.Count);
             if (choice is null) break;
 
             items[choice.Value - 1].Action();
