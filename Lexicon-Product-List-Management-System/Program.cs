@@ -19,10 +19,3 @@ catch (Exception ex)
 {
     ConsoleUI.RenderError($"Fatal error: {ex.Message}");
 }
-
-/*
- * TODO:
- * - Fix exit word to be 'q' and not exit
- * - On new search result clear console first
- * - Update Readme.md
- */
