@@ -11,11 +11,5 @@ var mainMenu = new List<(string, Action)>
     ("Search for products", productManager.SearchProducts),
 };
 
-try
-{
-    ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
-}
-catch (Exception ex)
-{
-    ConsoleUI.RenderError($"Fatal error: {ex.Message}");
-}
+
+ConsoleInput.GenerateMenu(mainMenu, "Main Menu");
