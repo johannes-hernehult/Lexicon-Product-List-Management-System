@@ -40,4 +40,4 @@ Products are kept in memory while the application is running. They are not saved
 <img width="782" height="614" alt="Screenshot From 2026-11-01 11-54-59" src="https://github.com/user-attachments/assets/7aa21684-047d-48d3-b9e5-cb2dd4a120b6" />
 
 ### Search products
-![Uploading Screenshot From 2026-11-01 11-55-16.png…]()
+<img width="782" height="645" alt="Screenshot From 2026-11-01 11-55-16" src="https://github.com/user-attachments/assets/0dc9ad8b-2063-4e68-8839-0dee5cd424c5" />
