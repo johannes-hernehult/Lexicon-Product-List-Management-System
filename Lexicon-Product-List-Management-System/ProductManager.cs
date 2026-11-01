@@ -6,10 +6,13 @@ public class ProductManager
 
     public void AddProduct()
     {
+        
         var sessionProducts = new List<Product>();
 
         while (true)
         {
+            Console.Clear();
+            ConsoleUI.RenderHeading("Add products");
             var product = PromptForProduct();
             if (product is null)
             {
@@ -96,7 +99,6 @@ public class ProductManager
 
     private static void RenderSessionProducts(IReadOnlyList<Product> items)
     {
-        Console.Clear();
         ConsoleUI.RenderText(Product.Header, ConsoleColor.Gray);
         ConsoleUI.RenderSingleLine();
         ConsoleUI.RenderList(items, ListStyle.Unordered, true);
