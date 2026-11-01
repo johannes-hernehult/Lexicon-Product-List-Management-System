@@ -110,7 +110,7 @@ public class ProductManager
 
     private static void RenderNoProducts()
     {
-        ConsoleUI.RenderText("Product list is empty, pleas add some first.", ConsoleColor.Yellow);
+        ConsoleUI.RenderText("Product list is empty, please add some first.", ConsoleColor.Yellow);
         ConsoleInput.Pause("Press 'Enter' to exit: ");
     }
 }

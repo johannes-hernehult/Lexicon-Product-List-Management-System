@@ -75,7 +75,7 @@ public static class ConsoleInput
 
     public static void ReportCancel(string what)
     {
-        ConsoleUI.RenderWarning($"{what} canceled. Nothing was saved.");
+        ConsoleUI.RenderWarning($"{what} canceled. Last product discarded.");
         Pause();
     }
 
