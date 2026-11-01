@@ -28,34 +28,36 @@ public class ProductManager
 
     public void ShowProducts()
     {
-        if (products.Count == 0)
-        {
-            RenderNoProducts();
-            return;
-        }
-
         var orderedProductsByPrice = products.OrderBy(p => p.Price).ToList();
         Console.Clear();
         ConsoleUI.RenderHeading("All products");
-        RenderTableHeader();
-        ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
-        ConsoleUI.RenderTotalPrice(products);
-        ConsoleInput.Pause();
+        if (products.Count == 0)
+        {
+            RenderNoProducts();
+        }
+        else
+        {
+            RenderTableHeader();
+            ConsoleUI.RenderList(orderedProductsByPrice, ListStyle.Unordered, true);
+            ConsoleUI.RenderTotalPrice(products);
+            ConsoleInput.Pause();
+        }
     }
 
     public void SearchProducts()
     {
-        if (products.Count == 0)
-        {
-            RenderNoProducts();
-            return;
-        }
-
         Console.Clear();
         ConsoleUI.RenderHeading("Search for products");
-
+        
         while (true)
         {
+            if (products.Count == 0)
+            {
+                RenderNoProducts();
+                break;
+            }
+
+
             var searchTerm = ConsoleInput.GetString("Search ('q' to go back): ", "Search term");
             if (searchTerm is null) break;
 
@@ -65,7 +67,6 @@ public class ProductManager
                     p.Category.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
-            Console.Clear();
             ConsoleUI.RenderHeading($"Results for '{searchTerm}'");
 
             if (results.Count == 0)
@@ -75,7 +76,7 @@ public class ProductManager
             }
 
             RenderTableHeader();
-            ConsoleUI.RenderList(results, ListStyle.Unordered, overrideColor: ConsoleColor.Green);
+            ConsoleUI.RenderList(results, overrideColor: ConsoleColor.Green);
         }
     }
 
@@ -109,7 +110,7 @@ public class ProductManager
 
     private static void RenderNoProducts()
     {
-        ConsoleUI.RenderText("No products found.", ConsoleColor.Yellow);
+        ConsoleUI.RenderText("Product list is empty, pleas add some first.", ConsoleColor.Yellow);
         ConsoleInput.Pause("Press 'Enter' to exit: ");
     }
 }
